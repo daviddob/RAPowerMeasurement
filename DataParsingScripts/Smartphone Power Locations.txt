@@ -1,0 +1,9 @@
+Smartphone Power Locations
+
+Good 20MHz - Location 1 & 2
+Good 40MHz - Location 1 & 2
+Semi-Good 20Mhz - Location 3
+Medium 20MHz - Location 6 & 7
+Medium 40MHz - Location 3 & 4
+Bad 20MHz - Location 5 & 8
+Bad 40MHz - Location 6 & 7

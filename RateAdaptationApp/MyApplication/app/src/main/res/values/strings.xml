@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">Rate Adaptation Activity</string>
+    <string-array name="locations_array">
+        <item>Location1</item>
+        <item>Location2</item>
+        <item>Location3</item>
+        <item>Location4</item>
+        <item>Location5</item>
+        <item>Location6</item>
+        <item>Location7</item>
+        <item>Location8</item>
+        <item>Location9</item>
+        <item>Location10</item>
+        <item>Location11</item>
+        <item>Location12</item>
+        <item>Location13</item>
+        <item>Location14</item>
+        <item>Location15</item>
+        <item>Location16</item>
+    </string-array>
+    <string-array name="mcs_array">
+        <item>MCS0</item>
+        <item>MCS1</item>
+        <item>MCS2</item>
+        <item>MCS3</item>
+        <item>MCS4</item>
+        <item>MCS5</item>
+        <item>MCS6</item>
+        <item>MCS7</item>
+        <item>MCS8</item>
+        <item>MCS9</item>
+        <item>MCS10</item>
+        <item>MCS11</item>
+        <item>MCS12</item>
+        <item>MCS13</item>
+        <item>MCS14</item>
+        <item>MCS15</item>
+        <item>MCSRA</item>
+    </string-array>
+    <string-array name="freq_array">
+        <item>20MHz</item>
+        <item>40MHz</item>
+    </string-array>
+</resources>

@@ -1,0 +1,51 @@
+import os
+import dpkt
+import binascii
+import json
+from sys import platform as _platform
+import subprocess
+
+# dpkt only works with python 2.7 and hence use 2.7 for this script
+
+####################################PLEASE EDIT ACCORDING TO YOUR DIRECTORY STRUCTURE##############################
+if _platform == "linux" or _platform == "linux2":
+    BASE_IP_DIR = "/media/tejash/Tejash/MSCS/CSEIndependentStudy/PowerMeasurementStudy/Readings"
+    BASE_OP_DIR = "/media/tejash/Media/CSEIndependentStudy/Results"
+    SLASH_SEPARATOR = "/"
+elif _platform == "win32" or _platform == 'win64':
+    BASE_IP_DIR = "F:\CSE630\Readings\DS\VariableCPU"
+    BASE_OP_DIR = "F:\CSE630\Results"
+    SLASH_SEPARATOR = "\/"
+####################################################################################################################
+
+for freq in os.listdir(BASE_IP_DIR):
+    #freqDir = BASE_IP_DIR + SLASH_SEPARATOR + freq
+    freqDir = BASE_IP_DIR + SLASH_SEPARATOR + "40MHz"
+    for location in os.listdir(freqDir):
+        #locationDir = freqDir + SLASH_SEPARATOR + location + SLASH_SEPARATOR + 'mcsra'
+        locationDir = freqDir + SLASH_SEPARATOR + "Location10" + SLASH_SEPARATOR + 'mcsra'
+        for reading in os.listdir(locationDir):
+            readingDir = locationDir + SLASH_SEPARATOR + reading
+            if os.path.isdir(readingDir):
+                for test in os.listdir(readingDir):
+                    testDir = readingDir + SLASH_SEPARATOR + test
+                    wiresharkFile = testDir + SLASH_SEPARATOR + "wireshark.pcap"
+                    f = open(wiresharkFile,'rb')
+                    print (wiresharkFile)
+                    pcap = dpkt.pcap.Reader(f)
+                    dl=pcap.datalink()
+                    if pcap.datalink() == 127:  # Check if RadioTap
+                        try:                           
+                           for timestamp, rawdata in pcap:
+                                tap = dpkt.radiotap.Radiotap(rawdata)
+                                mcs=binascii.hexlify(rawdata[28:29])
+                        except Exception:
+                            print "Invalid Packet (Cut Short)"
+                            #print "WiresharkFile " + wiresharkFile
+                            text_file = open("Errors.txt", "a")
+                            text_file.write(wiresharkFile)
+                            text_file.close()
+                            f.close()
+                            print "Repairing Wireshark File...."
+                            subprocess.call("E:\Documents\GitRepo\smartphone_power-performance_tools\DataParsingScripts\WiresharkPatch.bat "+wiresharkFile)
+                            break
