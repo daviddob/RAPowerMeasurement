@@ -51,7 +51,7 @@ for stream in os.listdir(BASE_IP_DIR):
 						if os.path.isdir(mcsDir):
 							for reading in os.listdir(mcsDir):
 								if reading.endswith('12345.txt'):
-									print reading
+									print stream + " " + cpu + " " + reading
 									with open(mcsDir + SLASH_SEPARATOR + reading) as file:
 										lines = file.readlines()
 									powerList = []
@@ -85,18 +85,18 @@ for stream in os.listdir(BASE_IP_DIR):
 											if averagePower > maxPower:
 												maxPower = averagePower
 												start = i
-											if averagePower < maxPower * 0.70:
+											if averagePower < maxPower * 0.65:
 												# end of test run, log the max power
 												active = False
 												averagePowerList.append(maxPower)
 												
-												# print "power at " + FREQ_RATES[freq][rate] + " [" + str(len(averagePowerList)) + "]: " + str(maxPower) + ", start: " + str(start/5000) + " seconds," +  " end: " + str((start+windowSize)/5000) + " seconds"
+												# print "power at " + FREQ_RATES[stream][freq][rate] + " [" + str(len(averagePowerList)) + "]: " + str(maxPower) + ", start: " + str(start/5000) + " seconds," +  " end: " + str((start+windowSize)/5000) + " seconds"
 												if len(averagePowerList) % 5 == 0:
 													rateValues[FREQ_RATES[stream][freq][rate]] = averagePowerList
 													rate += 1
 													averagePowerList = []
 												# set the threshold to begin measuring for the next test run
-												threshold = maxPower * 0.75
+												threshold = maxPower * 0.70
 												maxPower = 0
 										else:
 											if averagePower > threshold:
@@ -105,6 +105,7 @@ for stream in os.listdir(BASE_IP_DIR):
 									mcsValues[mcs] = rateValues #list(chunks(averagePowerList, 5))
 					locationPowerDictionary[location] = mcsValues
 				powerDict[freq] = locationPowerDictionary
+			
 			if not os.path.exists(BASE_OP_DIR + SLASH_SEPARATOR + stream):
 				os.makedirs(BASE_OP_DIR + SLASH_SEPARATOR + stream)
 			if not os.path.exists(BASE_OP_DIR + SLASH_SEPARATOR + stream + SLASH_SEPARATOR + cpu):
